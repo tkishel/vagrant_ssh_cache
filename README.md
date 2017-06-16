@@ -45,6 +45,7 @@ Reload your .bashrc:
 Execute the `vssh` command while in a vagrant directory to ssh to a running machine:
 
 ~~~
+cd puppet-debugging-kit
 vssh pe-201645-master
 ~~~
 
