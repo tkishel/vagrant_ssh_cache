@@ -38,7 +38,7 @@ vagrants.each do |vagrant|
   iden = ssh_config.lines.grep(/IdentityFile/)[0].split(' ')[1]
   next unless iden
   
-  vssh = "ssh #{user}@#{host} -p #{port} -i #{iden}"
+  vssh = "ssh #{user}@#{host} -p #{port} -i #{iden} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -q"
   File.write("#{mpath}/#{vm}/vssh", vssh)
   File.chmod(0755, "#{mpath}/#{vm}/vssh")
 end

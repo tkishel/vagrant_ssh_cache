@@ -56,3 +56,6 @@ The script caches `vagrant ssh-config` data for vagrant machines.
 The script will use that data to ssh to a vagrant machine.
 
 If cached data does not exist, the script will cache the data, and then ssh to the machine.
+
+Connections will not update the known hosts file or perform host key checking.
+
