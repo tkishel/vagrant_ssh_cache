@@ -24,20 +24,35 @@ vagrants.each do |vagrant|
   puts "Caching vagrant ssh-config for #{vm}"
 
   ssh_config = %x(vagrant ssh-config #{vm})
-  next unless ssh_config
-  
-  user = ssh_config.lines.grep(/User/)[0].split(' ')[1]
-  next unless user
+  if ! ssh_config
+    puts "Empty ssh-config for #{vm}, skipping."
+    next
+  end
 
-  host = ssh_config.lines.grep(/HostName/)[0].split(' ')[1]
-  next unless host
+  user = ssh_config.lines.grep(/User/)[0].to_s.split(' ')[1]
+  if ! user
+    puts "Empty User for #{vm}, skipping."
+    next
+  end
 
-  port = ssh_config.lines.grep(/Port/)[0].split(' ')[1]
-  next unless port
+  host = ssh_config.lines.grep(/HostName/)[0].to_s.split(' ')[1]
+  if ! host
+    puts "Empty HostName for #{vm}, skipping."
+    next
+  end
 
-  iden = ssh_config.lines.grep(/IdentityFile/)[0].split(' ')[1]
-  next unless iden
-  
+  port = ssh_config.lines.grep(/Port/)[0].to_s.split(' ')[1]
+  if ! port
+    puts "Empty Port for #{vm}, skipping."
+    next
+  end
+
+  iden = ssh_config.lines.grep(/IdentityFile/)[0].to_s.split(' ')[1]
+  if ! iden
+    puts "Empty IdentityFile for #{vm}, skipping."
+    next
+  end
+ 
   vssh = "ssh #{user}@#{host} -p #{port} -i #{iden} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -q"
   File.write("#{mpath}/#{vm}/vssh", vssh)
   File.chmod(0755, "#{mpath}/#{vm}/vssh")

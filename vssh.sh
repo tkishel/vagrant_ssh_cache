@@ -23,10 +23,10 @@ function vssh() {
   if [ -f "$VAGRANT_MACHINE_CACHED_SSH_FILE" ]; then
     $VAGRANT_MACHINE_CACHED_SSH_FILE
     if [ $? -ne 0 ]; then
-      echo "Error: unable to connect to $1: deleting the ssh cache file"
+      echo "Error: $?: deleting ssh cache file"
       rm -f $VAGRANT_MACHINE_CACHED_SSH_FILE
     fi
   else
-    echo "Error: the ssh cache file was not created for $1: please verify the machine is running"
+    echo "Error: ssh cache file was not created for $1: please verify the machine is running"
   fi
 }
